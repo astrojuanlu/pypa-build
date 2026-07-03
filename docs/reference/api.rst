@@ -97,6 +97,27 @@ Accessing build dependencies:
     wheel_requires = builder.get_requires_for_build("wheel")
     print(f"Wheel build requires: {wheel_requires}")
 
+Reading metadata without isolation:
+
+.. code-block:: python
+
+    from build.util import wheel_metadata
+
+    # Read metadata in the current environment, but first confirm the declared
+    # build dependencies are present so you can trust the result. A missing
+    # setuptools_scm, for example, would otherwise report the version as 0.0.0.
+    metadata = wheel_metadata(".", isolated=False, check_dependencies=True)
+    print(metadata["version"])
+
+:func:`build.util.wheel_metadata` returns the metadata as a parsed, JSON-serialisable mapping (the same structure
+``python -m build --metadata`` prints). Without ``check_dependencies=True``, a non-isolated call runs the backend
+against whatever you have installed and can return wrong metadata; with it, ``wheel_metadata`` raises
+:class:`build.DependencyError` listing the unmet dependencies. The flag does nothing when ``isolated`` is true, since
+build installs the dependencies either way.
+
+:func:`build.util.project_wheel_metadata` predates this and returns a :class:`email.message.Message`-style object; it is
+deprecated in favour of ``wheel_metadata``.
+
 Handling errors:
 
 .. code-block:: python

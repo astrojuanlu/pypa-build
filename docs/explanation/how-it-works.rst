@@ -164,6 +164,10 @@ installed can read as ``not installed`` when it was installed for a *different* 
 package manager often targets an interpreter other than the one invoking build, and metadata is not shared across
 interpreters. The error names the interpreter checked so the mismatch is visible rather than left to guesswork.
 
+The :func:`build.util.wheel_metadata` helper exposes the same check to API callers: ``isolated=False`` trusts the
+current environment, while ``check_dependencies=True`` runs the validation and raises :class:`build.DependencyError` on
+an unmet requirement.
+
 See :doc:`../how-to/basic-usage` for usage.
 
 ***********************************

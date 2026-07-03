@@ -49,7 +49,10 @@ extensions = [
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
+    # the Python Packaging User Guide (glossary terms, specifications)
     'packaging': ('https://packaging.python.org/en/latest/', None),
+    # the packaging library API (e.g. packaging.metadata.RawMetadata)
+    'packaging-api': ('https://packaging.pypa.io/en/stable/', None),
 }
 
 # Add any paths that contain templates here, relative to this directory.

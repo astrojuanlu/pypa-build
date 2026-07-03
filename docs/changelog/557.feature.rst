@@ -1,0 +1,6 @@
+Add :func:`build.util.wheel_metadata`, which returns a project's wheel metadata as a parsed, JSON-serialisable mapping
+(the structure ``python -m build --metadata`` prints) and accepts a ``check_dependencies`` keyword argument. With
+``isolated=False`` and ``check_dependencies=True`` it confirms the declared build dependencies are installed before
+running the backend and raises the new :class:`build.DependencyError`, which lists each unmet requirement with the
+version it wanted and the version it found, instead of returning incorrect metadata.
+:func:`build.util.project_wheel_metadata` is deprecated in favour of it - by :user:`gaborbernat`.

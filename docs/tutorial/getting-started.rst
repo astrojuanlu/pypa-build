@@ -207,6 +207,29 @@ instead of parsing the output:
 
     $ python -m build --report build-report.json
 
+*********************************
+ Inspecting metadata from Python
+*********************************
+
+Build also exposes a Python API. Try reading your package's metadata without producing a full build:
+
+.. code-block:: python
+
+    from build.util import wheel_metadata
+
+    metadata = wheel_metadata("mypackage")
+    print(metadata["name"], metadata["version"])
+
+This prints ``mypackage 0.1.0``. By default it spins up an isolated environment, just like the command line.
+
+If you have already installed your build dependencies and want to skip that step (for instance, on an offline machine),
+pass ``isolated=False``. Add ``check_dependencies=True`` so build still confirms the dependencies are present and raises
+:class:`build.DependencyError` if any are missing, instead of returning misleading metadata:
+
+.. code-block:: python
+
+    metadata = wheel_metadata("mypackage", isolated=False, check_dependencies=True)
+
 ************
  Next steps
 ************

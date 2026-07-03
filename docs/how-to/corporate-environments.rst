@@ -258,6 +258,22 @@ The ``--no-isolation`` flag tells build to use your current environment instead 
 
     When using ``--no-isolation``, ensure all build dependencies are installed and compatible.
 
+Reading metadata offline
+========================
+
+When you read metadata offline from Python, say a documentation build that needs the project version, pass
+``check_dependencies=True``. Build then confirms the declared build dependencies are installed before it runs the
+backend:
+
+.. code-block:: python
+
+    from build.util import project_wheel_metadata
+
+    metadata = project_wheel_metadata(".", isolated=False, check_dependencies=True)
+
+If a dependency is missing, build raises :class:`build.DependencyError` that names it. Without the check, an absent tool
+like ``setuptools_scm`` lets the backend report a wrong value such as a ``0.0.0`` version.
+
 ********************
  CI/CD environments
 ********************
